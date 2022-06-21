@@ -14,6 +14,8 @@ https://github.com/gorilla/websocket
 ```shell
 go get -u github.com/gin-gonic/gin
 go get github.com/gorilla/websocket
+go get go.mongodb.org/mongo-driver/mongo
+go get github.com/dgrijalva/jwt-go
 ```
 
 ## Docker 安装 mongoDB
