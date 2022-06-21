@@ -1,0 +1,18 @@
+@startmindmap
+
+title IM
+
+* <&flag>IM
+** 用户模块
+*** 密码登录
+*** 邮箱注册
+*** 用户详情
+** 通讯模块（核心）
+*** 一对一通讯
+*** 多对多通讯
+*** 消息列表
+*** 聊天记录列表
+
+center footer getcharzp
+
+@endmindmap
