@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"im/helper"
 	"im/models"
+	"log"
 	"net/http"
 )
 
@@ -39,5 +40,24 @@ func Login(c *gin.Context) {
 		"data": gin.H{
 			"token": token,
 		},
+	})
+}
+
+func UserDetail(c *gin.Context) {
+	u, _ := c.Get("user_claims")
+	uc := u.(*helper.UserClaims)
+	userBasic, err := models.GetUserBasicByIdentity(uc.Identity)
+	if err != nil {
+		log.Printf("[DB ERROR]:%v\n", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "数据查询异常",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "数据加载成功",
+		"data": userBasic,
 	})
 }
