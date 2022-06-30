@@ -10,7 +10,7 @@ title IM
 *** √ 用户详情
 ** 通讯模块（核心）
 *** √ 使用HTTP搭建Websocket服务
-*** 使用GIN搭建Websocket服务
+*** √ 使用GIN搭建Websocket服务
 *** 一对一通讯
 *** 多对多通讯
 *** 消息列表
