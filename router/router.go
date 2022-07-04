@@ -18,6 +18,8 @@ func Router() *gin.Engine {
 
 	// 用户详情
 	auth.GET("/user/detail", service.UserDetail)
+	// 发送、接受消息
+	auth.GET("/websocket/message", service.WebsocketMessage)
 
 	return r
 }

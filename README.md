@@ -16,6 +16,7 @@ go get -u github.com/gin-gonic/gin
 go get github.com/gorilla/websocket
 go get go.mongodb.org/mongo-driver/mongo
 go get github.com/dgrijalva/jwt-go
+go get github.com/satori/go.uuid
 ```
 
 ## Docker 安装 mongoDB

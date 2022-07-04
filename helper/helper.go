@@ -6,14 +6,13 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jordan-wright/email"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"im/define"
 	"net/smtp"
 )
 
 type UserClaims struct {
-	Identity primitive.ObjectID `json:"identity"`
-	Email    string             `json:"email"`
+	Identity string `json:"identity"`
+	Email    string `json:"email"`
 	jwt.StandardClaims
 }
 
@@ -28,12 +27,8 @@ var myKey = []byte("im")
 // GenerateToken
 // 生成 token
 func GenerateToken(identity, email string) (string, error) {
-	objectID, err := primitive.ObjectIDFromHex(identity)
-	if err != nil {
-		return "", err
-	}
 	UserClaim := &UserClaims{
-		Identity:       objectID,
+		Identity:       identity,
 		Email:          email,
 		StandardClaims: jwt.StandardClaims{},
 	}
