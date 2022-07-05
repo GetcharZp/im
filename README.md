@@ -15,9 +15,12 @@ https://github.com/gorilla/websocket
 go get -u github.com/gin-gonic/gin
 go get github.com/gorilla/websocket
 go get go.mongodb.org/mongo-driver/mongo
-go get github.com/dgrijalva/jwt-go
+go get -u github.com/golang-jwt/jwt/v4
 go get github.com/satori/go.uuid
 ```
+
+## 已启用的扩展
+~~go get github.com/dgrijalva/jwt-go~~
 
 ## Docker 安装 mongoDB
 ```shell
