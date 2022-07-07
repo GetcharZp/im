@@ -19,7 +19,7 @@ go get -u github.com/golang-jwt/jwt/v4
 go get github.com/satori/go.uuid
 ```
 
-## 已启用的扩展
+## 已弃用的扩展
 ~~go get github.com/dgrijalva/jwt-go~~
 
 ## Docker 安装 mongoDB
