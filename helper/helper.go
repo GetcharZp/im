@@ -6,8 +6,12 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/jordan-wright/email"
+	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 	"im/define"
+	"math/rand"
 	"net/smtp"
+	"strconv"
+	"time"
 )
 
 type UserClaims struct {
@@ -67,4 +71,25 @@ func SendCode(toUserEmail, code string) error {
 	return e.SendWithTLS("smtp.163.com:465",
 		smtp.PlainAuth("", "getcharzhaopan@163.com", define.MailPassword, "smtp.163.com"),
 		&tls.Config{InsecureSkipVerify: true, ServerName: "smtp.163.com"})
+}
+
+// GetCode
+// 生成验证码
+func GetCode() string {
+	rand.Seed(time.Now().UnixNano())
+	res := ""
+	for i := 0; i < 6; i++ {
+		res += strconv.Itoa(rand.Intn(10))
+	}
+	return res
+}
+
+// GetUUID
+// 生成唯一码
+func GetUUID() string {
+	u, err := uuid.New()
+	if err != nil {
+		return ""
+	}
+	return fmt.Sprintf("%x", u)
 }

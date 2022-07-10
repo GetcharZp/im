@@ -13,6 +13,8 @@ func Router() *gin.Engine {
 	r.POST("/login", service.Login)
 	// 发送验证码
 	r.POST("/send/code", service.SendCode)
+	// 用户注册
+	r.POST("/register", service.Register)
 
 	auth := r.Group("/u", middlewares.AuthCheck())
 
