@@ -224,6 +224,84 @@ func Register(c *gin.Context) {
 	})
 }
 
+func UserAdd(c *gin.Context) {
+	account := c.PostForm("account")
+	if account == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "参数不正确",
+		})
+		return
+	}
+	ub, err := models.GetUserBasicByAccount(account)
+	if err != nil {
+		log.Printf("[DB ERROR]:%v\n", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "数据查询异常",
+		})
+		return
+	}
+	uc := c.MustGet("user_claims").(*helper.UserClaims)
+	if models.JudgeUserIsFriend(ub.Identity, uc.Identity) {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "互为好友，不可重复添加",
+		})
+		return
+	}
+	// 保存房间记录
+	rb := &models.RoomBasic{
+		Identity:     helper.GetUUID(),
+		UserIdentity: uc.Identity,
+		CreatedAt:    time.Now().Unix(),
+		UpdatedAt:    time.Now().Unix(),
+	}
+	if err = models.InsertOneRoomBasic(rb); err != nil {
+		log.Printf("[DB ERROR]:%v\n", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "数据查询异常",
+		})
+		return
+	}
+	// 保存用户与房间的关联记录
+	ur := &models.UserRoom{
+		UserIdentity: uc.Identity,
+		RoomIdentity: rb.Identity,
+		RoomType:     1,
+		CreatedAt:    time.Now().Unix(),
+		UpdatedAt:    time.Now().Unix(),
+	}
+	if err = models.InsertOneUserRoom(ur); err != nil {
+		log.Printf("[DB ERROR]:%v\n", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "数据库异常",
+		})
+		return
+	}
+	ur = &models.UserRoom{
+		UserIdentity: ub.Identity,
+		RoomIdentity: rb.Identity,
+		RoomType:     1,
+		CreatedAt:    time.Now().Unix(),
+		UpdatedAt:    time.Now().Unix(),
+	}
+	if err = models.InsertOneUserRoom(ur); err != nil {
+		log.Printf("[DB ERROR]:%v\n", err)
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "数据库异常",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "添加成功",
+	})
+}
+
 type UserQueryResult struct {
 	Nickname string `json:"nickname"`
 	Sex      int    `bson:"sex"`

@@ -27,5 +27,8 @@ func Router() *gin.Engine {
 	// 聊天记录列表
 	auth.GET("/chat/list", service.ChatList)
 
+	// 添加用户
+	auth.POST("/user/add", service.UserAdd)
+
 	return r
 }
