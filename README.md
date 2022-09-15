@@ -3,6 +3,8 @@
 > IM(即时通讯)
 > 
 > 往期视频：https://www.bilibili.com/video/BV1rJ411p7Mi/
+> 
+> 本期视频：https://www.bilibili.com/video/BV1YL4y1c7ZX
 
 ## 技术栈
 语言：Golang 数据库：MongoDB 框架：GIN 协议：Websocket
